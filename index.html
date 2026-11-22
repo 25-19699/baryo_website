@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#073b78">
+  <meta name="description" content="Baryo Konek — Barangay Indangan resident and staff portal">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="stylesheet" href="/app.css?v=bk-desktop-aligned-20261122-06">
+  <title>Baryo Konek — Barangay Indangan</title>
+  <script src="/app.js?v=bk-desktop-aligned-20261122-06" defer></script>
+</head>
+<body data-theme="dark">
+  <div id="toastHost" class="toast-host" aria-live="polite"></div>
+
+  <main id="authView" class="auth-screen">
+    <section class="auth-card">
+      <div class="auth-brand">
+        <img src="/barangay.jpg" alt="Barangay Indangan" class="brand-logo">
+        <div><div class="brand-title">Baryo Konek</div><div class="brand-subtitle">Barangay Indangan</div></div>
+      </div>
+      <div class="auth-intro">
+        <span class="eyebrow">BARANGAY SERVICES PORTAL</span>
+        <h1 id="authHeading">Welcome Back!</h1>
+        <p id="authDescription">Sign in to access barangay announcements, documents, and your requests.</p>
+      </div>
+      <div class="role-switch" aria-label="Choose account type">
+        <button type="button" id="roleResident" class="role-choice active" data-role="RESIDENT">Resident</button>
+        <button type="button" id="roleAdmin" class="role-choice" data-role="ADMIN">Barangay Staff</button>
+      </div>
+      <div class="auth-tabs">
+        <button type="button" id="showLogin" class="tab active">Sign In</button>
+        <button type="button" id="showRegister" class="tab">Create Account</button>
+      </div>
+      <form id="loginForm" class="form-stack">
+        <label>Username<input name="username" autocomplete="username" required maxlength="20" placeholder="Enter your username"></label>
+        <label>Password<input name="password" type="password" autocomplete="current-password" required placeholder="Enter your password"></label>
+        <div class="login-meta">
+          <label class="check-row"><input id="loginShowPassword" type="checkbox"> <span>Show password</span></label>
+          <button id="forgotPasswordButton" class="forgot-link" type="button">Forgot password?</button>
+        </div>
+        <p class="form-note" id="loginNote">This portal is for residents. Barangay staff can select the staff sign-in option above.</p>
+        <button class="btn primary full" type="submit" id="loginSubmit">Sign In</button>
+        <p class="inline-message" id="loginError" role="alert"></p>
+      </form>
+      <form id="registerForm" class="form-stack hidden">
+        <label>Full Name<input name="fullName" required minlength="3" placeholder="Enter your complete name"></label>
+        <div class="form-grid">
+          <label>Purok<select name="purok" required><option value="">Select Purok</option><option>Purok 1</option><option>Purok 2</option><option>Purok 3</option><option>Purok 4</option><option>Purok 5</option><option>Purok 6</option><option>Purok 7</option><option>Purok 8</option></select></label>
+          <label>Mobile Number<input name="contact" inputmode="tel" required placeholder="09XXXXXXXXX"></label>
+        </div>
+        <label>Address<input name="address" required placeholder="House number, street, or sitio"></label>
+        <label>Username<input name="username" autocomplete="username" required minlength="4" maxlength="20" placeholder="4–20 letters, numbers, _ or ."></label>
+        <div class="form-grid">
+          <label>Password<input name="password" type="password" autocomplete="new-password" required minlength="6"></label>
+          <label>Confirm Password<input name="confirm" type="password" autocomplete="new-password" required minlength="6"></label>
+        </div>
+        <button class="btn primary full" type="submit">Create Resident Account</button>
+        <p class="inline-message" id="registerError" role="alert"></p>
+      </form>
+      <div class="auth-footer">Fast, organized and accessible services for every resident.</div>
+    </section>
+  </main>
+
+  <div id="appView" class="app-shell hidden">
+    <header class="topbar">
+      <div class="topbar-brand">
+        <img src="/barangay.jpg" alt="" class="topbar-logo">
+        <div><strong>Baryo Konek</strong><small>Barangay Indangan</small></div>
+      </div>
+      <div class="topbar-actions">
+        <button id="installButton" class="icon-button hidden" type="button" aria-label="Install app" title="Install app">⇩</button>
+        <button id="topNotifications" class="icon-button notification-icon" type="button" aria-label="Notifications" title="Notifications"><span class="nav-icon" data-icon="MEGAPHONE" aria-hidden="true"></span><span id="topBadge" class="count-badge hidden">0</span></button>
+        <button id="logoutButton" class="text-button" type="button">Log out</button>
+      </div>
+    </header>
+
+    <div class="app-layout">
+      <aside class="desktop-nav" aria-label="Main navigation">
+        <div class="nav-user"><div class="avatar" id="navAvatar">R</div><div><strong id="navName">Resident</strong><small id="navPurok">Resident Account</small></div></div>
+        <nav id="sideNav" class="nav-list"></nav>
+        <div class="sidebar-footer"><small id="portalLabel">Resident Portal</small><strong>Barangay Indangan</strong></div>
+      </aside>
+
+      <main class="page-area">
+        <section id="pageHome" class="page-section"></section>
+        <section id="pageResidents" class="page-section hidden"></section>
+        <section id="pageDocuments" class="page-section hidden"></section>
+        <section id="pageRequests" class="page-section hidden"></section>
+        <section id="pageHistory" class="page-section hidden"></section>
+        <section id="pageAnnouncements" class="page-section hidden"></section>
+        <section id="pageNotifications" class="page-section hidden"></section>
+        <section id="pageSettings" class="page-section hidden"></section>
+      </main>
+    </div>
+
+    <nav id="bottomNav" class="bottom-nav" aria-label="Mobile navigation"></nav>
+  </div>
+
+  <dialog id="requestDialog" class="app-dialog">
+    <form id="requestForm" class="dialog-card">
+      <div class="dialog-heading"><div><span class="eyebrow">BARANGAY DOCUMENTS</span><h2 id="requestDialogTitle">Request a Document</h2></div><button type="button" class="close-button" data-close-dialog="requestDialog" aria-label="Close">×</button></div>
+      <input type="hidden" name="requestId">
+      <label>Document Type<select name="documentType" id="requestDocumentType" required></select></label>
+      <label>Quantity / Number of Copies<input name="quantity" type="number" inputmode="numeric" min="1" max="100" value="1" required></label>
+      <label>Purpose<textarea name="purpose" rows="3" maxlength="500" required placeholder="State why you need this document"></textarea></label>
+      <div class="dialog-actions"><button type="button" class="btn secondary" data-close-dialog="requestDialog">Cancel</button><button type="submit" class="btn primary">Submit Request</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="passwordDialog" class="app-dialog">
+    <form id="passwordForm" class="dialog-card">
+      <div class="dialog-heading"><div><span class="eyebrow">ACCOUNT SECURITY</span><h2>Change Password</h2></div><button type="button" class="close-button" data-close-dialog="passwordDialog" aria-label="Close">×</button></div>
+      <label>Current Password<input name="currentPassword" type="password" required autocomplete="current-password"></label>
+      <label>New Password<input name="newPassword" type="password" required minlength="6" autocomplete="new-password"></label>
+      <label>Confirm New Password<input name="confirmPassword" type="password" required minlength="6" autocomplete="new-password"></label>
+      <div class="dialog-actions"><button type="button" class="btn secondary" data-close-dialog="passwordDialog">Cancel</button><button type="submit" class="btn primary">Save Password</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="confirmDialog" class="app-dialog confirm-dialog" aria-labelledby="confirmTitle">
+    <div class="dialog-card">
+      <div class="dialog-heading"><div><span class="eyebrow">CONFIRM ACTION</span><h2 id="confirmTitle">Are you sure?</h2></div><button id="confirmClose" type="button" class="close-button" aria-label="Close">×</button></div>
+      <p id="confirmMessage" class="confirm-message">Please confirm that you want to continue.</p>
+      <div class="dialog-actions"><button id="confirmCancel" type="button" class="btn secondary">Cancel</button><button id="confirmAccept" type="button" class="btn primary">Confirm</button></div>
+    </div>
+  </dialog>
+
+  <dialog id="actionDialog" class="app-dialog">
+    <form id="actionForm" class="dialog-card">
+      <div class="dialog-heading"><div><span class="eyebrow" id="actionKicker">BARYO KONEK</span><h2 id="actionTitle">Details</h2></div><button type="button" class="close-button" data-close-dialog="actionDialog" aria-label="Close">×</button></div>
+      <div id="actionBody" class="form-stack"></div>
+      <div class="dialog-actions"><button type="button" class="btn secondary" data-close-dialog="actionDialog">Cancel</button><button type="submit" id="actionSubmit" class="btn primary">Save</button></div>
+    </form>
+  </dialog>
+</body>
+</html>
